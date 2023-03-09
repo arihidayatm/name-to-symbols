@@ -400,3 +400,89 @@ def print_text_in_symbol(text_input, symbol_char='X', symbol_bg='-', inline=Fals
                   s0, s1, s2, s3, s4, s5, s5]
 
     # ---END------Lists for the formation of the letters----------------
+
+    res = ''
+    dont_use = ''
+    alph = 'abcdefghijklmnopqrstuvwxyz 0123456789?!,.-+'
+    text_error = 'Print Successful.\n Your text :'
+
+    text_input = text_input.lower()
+    your_text = text_input
+
+    # -----------Processing errors in text_input-----------------
+    # 1. If nothing is entered
+    if text_input == '':
+        text_input = 'none text'
+        your_text = "You don't input text."
+
+    # 2. Checking for a character in the alphabet
+    try:
+        for char in text_input.lower():
+            # 3. if there is no character in the alphabet function returns an error(ValueError)
+            alph.index(char)
+
+    # ------error Processing(ValueError)----
+    except ValueError:
+        text_error = '''
+Error input. 
+1. Use A-Z a-z, 0-9, ?!,.-+, for your input.
+Your text: '''
+        # changing text_input
+        text_input = 'error'
+    # ---END---error Processing(ValueError)------
+
+    finally:
+        # Outputs the generated string
+        print(text_error+your_text+dont_use)
+
+        if inline:
+            res = ''
+            print_res = ''
+            for i in range(0, 8):
+                for char in text_input:
+                    ch_ascii = ascii_alph[alph.index(char)]
+                    res += ch_ascii[i]
+                res += '\n'
+            for char in res:
+                if char == '0':
+                    print_res += symbol_bg
+                elif char == '1':
+                    print_res += symbol_char
+                elif char == '\n':
+                    print_res += '\n'
+            print(print_res)
+        else:
+            for char in text_input:
+                ch_ascii = ascii_alph[alph.index(char)]
+                for i in ch_ascii:
+                    for t in i:
+                        for char in t:
+                            if char == '0':
+                                res += symbol_bg
+                            elif char == '1':
+                                res += symbol_char
+                    print(res)
+                    res = ''
+    # ---END-----Processing errors in input-----------------
+
+# -----END---------Function print_text_in_symbol------------
+
+
+# ---Set for select characters-------------------------------
+ch = 'XO#@'
+ch_bg = '.`'
+# ---Random selection of a set of characters----------------
+rand_ch = ch[randrange(len(ch))]
+rand_bg = ch_bg[randrange(len(ch_bg))]
+
+
+# User input----------------------------------------
+text_input = input()
+
+print("Please leave a like if you enjoyed!\n")
+
+# print("print in a horizontal line".upper())
+#print_text_in_symbol(text_input, rand_ch, rand_bg, inline = True)
+
+print("print in a vertical line".upper())
+print_text_in_symbol(text_input, rand_ch, rand_bg, inline=False)
